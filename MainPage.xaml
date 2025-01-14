@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PersonasApp.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:PersonasApp.ViewModels"
+    x:DataType="viewmodels:MainViewModel"
+    BackgroundImageSource="fondo.jpg"
+    BindingContext="{viewmodels:MainViewModel}">
+
+    <StackLayout>
+        <Button Command="{Binding RequestCommand}" 
+                Text="CONSULTAR" />
+    </StackLayout>
+
+</ContentPage>
