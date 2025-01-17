@@ -1,13 +1,14 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PersonasApp.Models
 {
-    class Persona
+    public class Persona
     {
         [JsonProperty("id")]
         public int Id { get; set; }
@@ -26,6 +27,9 @@ namespace PersonasApp.Models
 
         [JsonProperty("telefono")]
         public Telefono Telefono { get; set; }
+
+        [JsonProperty("actividades")]
+        public ObservableCollection<Actividad> Actividades { get; set; }
 
         public Persona() { }
 

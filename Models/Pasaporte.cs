@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PersonasApp.Models
 {
-    class Pasaporte
+    public class Pasaporte
     {
         [JsonProperty("id")]
         public int Id { get; set; }

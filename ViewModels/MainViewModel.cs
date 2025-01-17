@@ -13,9 +13,13 @@ namespace PersonasApp.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
+        [ObservableProperty]
+        private ObservableCollection<Persona> listaPersonas;
+
         [RelayCommand]
         public async void Request()
         {
+
             using (HttpClient client = new HttpClient())
             {
                 try
@@ -26,8 +30,8 @@ namespace PersonasApp.ViewModels
                     string responseJSON = await response.Content.ReadAsStringAsync();
                     try
                     {
-                        ObservableCollection<Persona> ListaPersonas =
-                            JsonConvert.DeserializeObject<ObservableCollection<Persona>>(responseJSON);
+                        ListaPersonas =
+                           JsonConvert.DeserializeObject<ObservableCollection<Persona>>(responseJSON);
 
                     }
                     catch (Exception e)
