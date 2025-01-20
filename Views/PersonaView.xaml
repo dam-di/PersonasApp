@@ -1,11 +1,122 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="PersonasApp.Views.PersonaView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+<ContentPage
+    x:Class="PersonasApp.Views.PersonaView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:PersonasApp.ViewModels"
+    x:DataType="viewmodels:PersonaViewModel"
+    BindingContext="{viewmodels:PersonaViewModel}">
+    <VerticalStackLayout VerticalOptions="Center">
+
+        <VerticalStackLayout
+            BackgroundColor="WhiteSmoke"
+            HeightRequest="650"
+            WidthRequest="450">
+            <VerticalStackLayout.Shadow>
+                <Shadow
+                    Brush="Black"
+                    Opacity=".7"
+                    Radius="5"
+                    Offset="10,10" />
+            </VerticalStackLayout.Shadow>
+
+            <Label
+                Margin="10"
+                FontAttributes="Bold"
+                FontFamily="Comic Sans MS"
+                FontSize="30"
+                HorizontalOptions="Center"
+                Text="FORMULARIO ALTA" />
+
+            <Label
+                Margin="90,30,0,0"
+                FontAttributes="Bold"
+                FontFamily="Comic Sans MS"
+                FontSize="15"
+                HorizontalOptions="Start"
+                Text="NOMBRE:" />
+
+            <Entry
+                Margin="90,5,0,0"
+                HorizontalOptions="Start"
+                Placeholder="Nombre"
+                Text="{Binding Persona.Nombre}"
+                WidthRequest="200" />
+
+            <Label
+                Margin="90,10,0,0"
+                FontAttributes="Bold"
+                FontFamily="Comic Sans MS"
+                FontSize="15"
+                HorizontalOptions="Start"
+                Text="CORREO:" />
+
+            <Entry
+                Margin="90,5,0,0"
+                HorizontalOptions="Start"
+                Placeholder="Correo"
+                Text="{Binding Persona.Correo}"
+                WidthRequest="200" />
+
+            <Label
+                Margin="90,10,0,0"
+                FontAttributes="Bold"
+                FontFamily="Comic Sans MS"
+                FontSize="15"
+                HorizontalOptions="Start"
+                Text="FECHA:" />
+
+            <DatePicker
+                Margin="90,5,0,0"
+                Date="{Binding Persona.FechaNacimiento}"
+                Format="dd/MM/yyy" />
+
+            <HorizontalStackLayout Margin="85,5,0,0">
+                <CheckBox x:Name="telefono_check" IsChecked="False" />
+                <Label Text="Teléfono" VerticalTextAlignment="Center" />
+            </HorizontalStackLayout>
+
+            <!--  TELEFONO OCULTO  -->
+            <VerticalStackLayout IsVisible="{Binding Source={x:Reference telefono_check}, Path=IsChecked}">
+                <Label
+                    Margin="90,10,0,0"
+                    FontAttributes="Bold"
+                    FontFamily="Comic Sans MS"
+                    FontSize="15"
+                    HorizontalOptions="Start"
+                    Text="Número:" />
+
+                <Entry
+                    Margin="90,5,0,0"
+                    HorizontalOptions="Start"
+                    Placeholder="Número"
+                    Text="{Binding Persona.Telefono.Numero}"
+                    WidthRequest="200" />
+                <Label
+                    Margin="90,10,0,0"
+                    FontAttributes="Bold"
+                    FontFamily="Comic Sans MS"
+                    FontSize="15"
+                    HorizontalOptions="Start"
+                    Text="Tipo:" />
+                <Picker
+                    Margin="90,10,0,0"
+                    HorizontalOptions="Start"
+                    SelectedItem="{Binding Persona.Telefono.Tipo}"
+                    WidthRequest="200" />
+
+            </VerticalStackLayout>
+            <Button
+                Margin="20"
+                BackgroundColor="DeepSkyBlue"
+                Command="{Binding CrearPersonaCommand}"
+                FontAttributes="Bold"
+                FontFamily="Comic Sans MS"
+                FontSize="20"
+                HorizontalOptions="Center"
+                Text="CREAR"
+                WidthRequest="150" />
+        </VerticalStackLayout>
+
     </VerticalStackLayout>
 </ContentPage>
