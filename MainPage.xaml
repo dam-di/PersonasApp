@@ -20,6 +20,13 @@
                     Text="PERSONAS" />
 
                 <ScrollView>
+                    <ScrollView.Shadow>
+                        <Shadow
+                            Brush="Black"
+                            Opacity=".7"
+                            Radius="5"
+                            Offset="10,10" />
+                    </ScrollView.Shadow>
                     <CollectionView
                         x:Name="personasCollectionView"
                         Background="Wheat"
@@ -28,11 +35,11 @@
                         SelectionMode="Single">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:Persona">
-                                <Frame BackgroundColor="White">
+                                <Frame Margin="10" BackgroundColor="White">
                                     <StackLayout>
                                         <StackLayout.Shadow>
                                             <Shadow
-                                                Brush="Black"
+                                                Brush="Yellow"
                                                 Opacity=".7"
                                                 Radius="5"
                                                 Offset="5,5" />
