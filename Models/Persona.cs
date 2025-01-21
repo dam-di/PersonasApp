@@ -20,17 +20,15 @@ namespace PersonasApp.Models
         public string Correo { get; set; }
 
         [JsonProperty("fechaNacimiento")]
-        public DateTime FechaNacimiento { get; set; } = DateTime.Now;
+        public DateTime FechaNacimiento { get; set; }
 
         [JsonProperty("pasaporte")]
-        public Pasaporte Pasaporte { get; set; } = new Pasaporte();
-
+        public Pasaporte Pasaporte { get; set; }
         [JsonProperty("telefono")]
-        public Telefono Telefono { get; set; } = new Telefono();
+        public Telefono Telefono { get; set; }
 
         [JsonProperty("actividades")]
         public ObservableCollection<Actividad> Actividades { get; set; }
-            = new ObservableCollection<Actividad>();
 
         public Persona()
         {

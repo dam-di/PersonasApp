@@ -18,6 +18,7 @@ namespace PersonasApp.Models
         [JsonProperty("tipo")]
         public string Tipo { get; set; }
 
+        public Persona Persona { get; set; }
         public Telefono() { }
     }
 }

@@ -3,15 +3,16 @@
     x:Class="PersonasApp.Views.PersonaView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewmodels="clr-namespace:PersonasApp.ViewModels"
     x:DataType="viewmodels:PersonaViewModel"
     BindingContext="{viewmodels:PersonaViewModel}">
     <VerticalStackLayout VerticalOptions="Center">
-
+        <!--  STACK PRINCIPAL DEL FORMULARIO  -->
         <VerticalStackLayout
             BackgroundColor="WhiteSmoke"
             HeightRequest="650"
-            WidthRequest="450">
+            WidthRequest="600">
             <VerticalStackLayout.Shadow>
                 <Shadow
                     Brush="Black"
@@ -28,84 +29,172 @@
                 HorizontalOptions="Center"
                 Text="FORMULARIO ALTA" />
 
-            <Label
-                Margin="90,30,0,0"
-                FontAttributes="Bold"
-                FontFamily="Comic Sans MS"
-                FontSize="15"
-                HorizontalOptions="Start"
-                Text="NOMBRE:" />
+            <HorizontalStackLayout>
+                <VerticalStackLayout>
+                    <Label
+                        Margin="90,30,0,0"
+                        FontAttributes="Bold"
+                        FontFamily="Comic Sans MS"
+                        FontSize="15"
+                        HorizontalOptions="Start"
+                        Text="NOMBRE:" />
 
-            <Entry
-                Margin="90,5,0,0"
-                HorizontalOptions="Start"
-                Placeholder="Nombre"
-                Text="{Binding Persona.Nombre}"
-                WidthRequest="200" />
+                    <Entry
+                        Margin="90,5,0,0"
+                        HorizontalOptions="Start"
+                        Placeholder="Nombre"
+                        Text="{Binding Persona.Nombre}"
+                        WidthRequest="200" />
 
-            <Label
-                Margin="90,10,0,0"
-                FontAttributes="Bold"
-                FontFamily="Comic Sans MS"
-                FontSize="15"
-                HorizontalOptions="Start"
-                Text="CORREO:" />
+                    <Label
+                        Margin="90,10,0,0"
+                        FontAttributes="Bold"
+                        FontFamily="Comic Sans MS"
+                        FontSize="15"
+                        HorizontalOptions="Start"
+                        Text="CORREO:" />
 
-            <Entry
-                Margin="90,5,0,0"
-                HorizontalOptions="Start"
-                Placeholder="Correo"
-                Text="{Binding Persona.Correo}"
-                WidthRequest="200" />
+                    <Entry
+                        Margin="90,5,0,0"
+                        HorizontalOptions="Start"
+                        Placeholder="Correo"
+                        Text="{Binding Persona.Correo}"
+                        WidthRequest="200" />
 
-            <Label
-                Margin="90,10,0,0"
-                FontAttributes="Bold"
-                FontFamily="Comic Sans MS"
-                FontSize="15"
-                HorizontalOptions="Start"
-                Text="FECHA:" />
+                    <Label
+                        Margin="90,10,0,0"
+                        FontAttributes="Bold"
+                        FontFamily="Comic Sans MS"
+                        FontSize="15"
+                        HorizontalOptions="Start"
+                        Text="FECHA:" />
 
-            <DatePicker
-                Margin="90,5,0,0"
-                Date="{Binding Persona.FechaNacimiento}"
-                Format="dd/MM/yyy" />
+                    <DatePicker
+                        Margin="90,5,0,0"
+                        Date="{Binding Persona.FechaNacimiento}"
+                        Format="dd/MM/yyy" />
+                </VerticalStackLayout>
 
-            <HorizontalStackLayout Margin="85,5,0,0">
-                <CheckBox x:Name="telefono_check" IsChecked="False" />
-                <Label Text="Teléfono" VerticalTextAlignment="Center" />
+                <VerticalStackLayout
+                    HeightRequest="200"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+
+                    <Image IsAnimationPlaying="True" 
+                           Source="{Binding RutaImagen}" WidthRequest="130"  />
+                    <Button Text="SELECCIONAR IMAGEN" Command="{Binding SeleccionarImagenCommand}" 
+                            Margin="5"/>
+                    <Button Text="SUBIR" Margin="5"/>
+                </VerticalStackLayout>
+
             </HorizontalStackLayout>
 
-            <!--  TELEFONO OCULTO  -->
-            <VerticalStackLayout IsVisible="{Binding Source={x:Reference telefono_check}, Path=IsChecked}">
-                <Label
-                    Margin="90,10,0,0"
-                    FontAttributes="Bold"
-                    FontFamily="Comic Sans MS"
-                    FontSize="15"
-                    HorizontalOptions="Start"
-                    Text="Número:" />
 
-                <Entry
-                    Margin="90,5,0,0"
-                    HorizontalOptions="Start"
-                    Placeholder="Número"
-                    Text="{Binding Persona.Telefono.Numero}"
-                    WidthRequest="200" />
-                <Label
-                    Margin="90,10,0,0"
-                    FontAttributes="Bold"
-                    FontFamily="Comic Sans MS"
-                    FontSize="15"
-                    HorizontalOptions="Start"
-                    Text="Tipo:" />
-                <Picker
-                    Margin="90,10,0,0"
-                    HorizontalOptions="Start"
-                    SelectedItem="{Binding Persona.Telefono.Tipo}"
-                    WidthRequest="200" />
 
-            </VerticalStackLayout>
+            <!--  ROJO  -->
+            <HorizontalStackLayout HeightRequest="220">
+                <!--  STACK MORADO TELEFONO  -->
+                <VerticalStackLayout WidthRequest="300">
+                    <HorizontalStackLayout Margin="85,5,0,0">
+                        <CheckBox x:Name="telefono_check" IsChecked="False">
+                            <CheckBox.Behaviors>
+                                <toolkit:EventToCommandBehavior
+                                    Command="{Binding CheckTelefonoCommand}"
+                                    CommandParameter="{Binding Source={x:Reference telefono_check}, Path=IsChecked}"
+                                    EventName="CheckedChanged" />
+                            </CheckBox.Behaviors>
+
+                        </CheckBox>
+                        <Label Text="Teléfono" VerticalTextAlignment="Center" />
+                    </HorizontalStackLayout>
+
+                    <!--  TELEFONO OCULTO  -->
+                    <VerticalStackLayout IsVisible="{Binding Source={x:Reference telefono_check}, Path=IsChecked}">
+                        <Label
+                            Margin="90,10,0,0"
+                            FontAttributes="Bold"
+                            FontFamily="Comic Sans MS"
+                            FontSize="15"
+                            HorizontalOptions="Start"
+                            Text="Número:" />
+
+                        <Entry
+                            Margin="90,5,0,0"
+                            HorizontalOptions="Start"
+                            Placeholder="Número"
+                            Text="{Binding Persona.Telefono.Numero}"
+                            WidthRequest="200" />
+                        <Label
+                            Margin="90,10,0,0"
+                            FontAttributes="Bold"
+                            FontFamily="Comic Sans MS"
+                            FontSize="15"
+                            HorizontalOptions="Start"
+                            Text="Tipo:" />
+                        <Picker
+                            Margin="90,10,0,0"
+                            HorizontalOptions="Start"
+                            SelectedItem="{Binding Persona.Telefono.Tipo}"
+                            WidthRequest="200">
+                            <Picker.Items>
+                                <x:String>Fijo</x:String>
+                                <x:String>Móvil</x:String>
+                            </Picker.Items>
+                        </Picker>
+
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+
+                <!--  STACK AZUL PASAPORTE  -->
+                <VerticalStackLayout>
+                    <HorizontalStackLayout Margin="15,5,0,0">
+                        <CheckBox x:Name="pasaporte_check" IsChecked="False">
+                            <CheckBox.Behaviors>
+                                <toolkit:EventToCommandBehavior
+                                    Command="{Binding CheckPasaporteCommand}"
+                                    CommandParameter="{Binding Source={x:Reference pasaporte_check}, Path=IsChecked}"
+                                    EventName="CheckedChanged" />
+                            </CheckBox.Behaviors>
+
+                        </CheckBox>
+                        <Label Text="Pasaporte" VerticalTextAlignment="Center" />
+                    </HorizontalStackLayout>
+
+                    <!--  PASAPORTE OCULTO  -->
+                    <VerticalStackLayout IsVisible="{Binding Source={x:Reference pasaporte_check}, Path=IsChecked}">
+                        <Label
+                            Margin="20,10,0,0"
+                            FontAttributes="Bold"
+                            FontFamily="Comic Sans MS"
+                            FontSize="15"
+                            HorizontalOptions="Start"
+                            Text="Número:" />
+
+                        <Entry
+                            Margin="20,5,0,0"
+                            HorizontalOptions="Start"
+                            Placeholder="Número"
+                            Text="{Binding Persona.Pasaporte.Numero}"
+                            WidthRequest="200" />
+                        <Label
+                            Margin="20,10,0,0"
+                            FontAttributes="Bold"
+                            FontFamily="Comic Sans MS"
+                            FontSize="15"
+                            HorizontalOptions="Start"
+                            Text="Fecha:" />
+                        <DatePicker
+                            Margin="20,10,0,0"
+                            Date="{Binding Persona.Pasaporte.FechaEmision}"
+                            Format="dd/MM/yyy"
+                            HorizontalOptions="Start"
+                            WidthRequest="200" />
+
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+
+            </HorizontalStackLayout>
+
             <Button
                 Margin="20"
                 BackgroundColor="DeepSkyBlue"

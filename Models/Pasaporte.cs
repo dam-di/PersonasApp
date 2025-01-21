@@ -17,6 +17,9 @@ namespace PersonasApp.Models
 
         [JsonProperty("fechaEmision")]
         public DateTime FechaEmision { get; set; }
+
+        public Persona Persona { get; set; }
+
         public Pasaporte()
         {
 
