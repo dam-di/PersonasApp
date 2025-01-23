@@ -1,17 +1,20 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Maui.Controls;
+using Newtonsoft.Json;
+using PersonasApp.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace PersonasApp.Models
 {
     public class Persona
     {
-        [JsonProperty("id")]
-        public int Id { get; set; }
+        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? Id { get; set; }
 
         [JsonProperty("nombre")]
         public string Nombre { get; set; }
@@ -19,6 +22,7 @@ namespace PersonasApp.Models
         [JsonProperty("correo")]
         public string Correo { get; set; }
 
+        [Newtonsoft.Json.JsonConverter(typeof(DateConverter))]
         [JsonProperty("fechaNacimiento")]
         public DateTime FechaNacimiento { get; set; }
 

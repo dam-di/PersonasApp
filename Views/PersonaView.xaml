@@ -80,11 +80,15 @@
                     HorizontalOptions="Center"
                     VerticalOptions="Center">
 
-                    <Image IsAnimationPlaying="True" 
-                           Source="{Binding RutaImagen}" WidthRequest="130"  />
-                    <Button Text="SELECCIONAR IMAGEN" Command="{Binding SeleccionarImagenCommand}" 
-                            Margin="5"/>
-                    <Button Text="SUBIR" Margin="5"/>
+                    <Image
+                        IsAnimationPlaying="True"
+                        Source="{Binding RutaImagen}"
+                        WidthRequest="130" />
+                    <Button
+                        Margin="5"
+                        Command="{Binding SeleccionarImagenCommand}"
+                        Text="SELECCIONAR IMAGEN" />
+                    <Button Margin="5" Text="SUBIR" />
                 </VerticalStackLayout>
 
             </HorizontalStackLayout>

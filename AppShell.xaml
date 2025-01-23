@@ -17,6 +17,10 @@
             <ShellContent ContentTemplate="{DataTemplate views:PersonaView}" Route="PersonasPage" />
         </Tab>
 
+        <Tab Title="GESTION">
+            <ShellContent ContentTemplate="{DataTemplate views:GestionView}" Route="GestionPage" />
+        </Tab>
+
     </TabBar>
 
 

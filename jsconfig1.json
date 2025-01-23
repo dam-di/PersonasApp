@@ -1,0 +1,13 @@
+{
+  "nombre": "Nombre de la persona",
+  "correo": "nombre@correo.es",
+  "fechaNacimiento": "2000-10-02",
+  "pasaporte": {
+    "numero": "numero de pasaporte",
+    "fechaEmision": "2024-01-06"
+  },
+  "telefono": {
+    "numero": "925925925",
+    "tipo": "el tipo de telefono"
+  }
+}
