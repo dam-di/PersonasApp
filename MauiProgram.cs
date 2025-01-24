@@ -12,6 +12,7 @@ namespace PersonasApp
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                fonts.AddFont("kindergarten.ttf", "KinderGarten");
             }).UseMauiCommunityToolkit();
 #if DEBUG
             builder.Logging.AddDebug();

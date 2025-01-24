@@ -1,9 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Newtonsoft.Json;
 using PersonasApp.Models;
 using PersonasApp.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,32 @@ namespace PersonasApp.ViewModels
 {
     public partial class GestionViewModel : ObservableObject
     {
+        [ObservableProperty]
+        private ObservableCollection<Persona> listaPersonas;
+
+        [RelayCommand]
+        public async void ObtenerPersonas()
+        {
+            RequestModel request = new RequestModel()
+            {
+                Method = "GET",
+                Data = string.Empty,
+                Route = "http://localhost:8080/personas/todos"
+            };
+
+            ResponseModel response = await APIService.ExecuteRequest(request);
+            if (response.Success.Equals(0))
+            {
+                try
+                {
+                    ListaPersonas =
+                        JsonConvert.DeserializeObject<ObservableCollection<Persona>>(response.Data.ToString());
+                }
+                catch (Exception ex) { }
+            }
+
+        }
+
         [RelayCommand]
         public async void CrearGasto()
         {

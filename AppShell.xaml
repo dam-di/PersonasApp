@@ -9,6 +9,11 @@
     Shell.FlyoutBehavior="Disabled">
 
     <TabBar>
+
+        <Tab Title="GESTION">
+            <ShellContent ContentTemplate="{DataTemplate views:GestionView}" Route="GestionPage" />
+        </Tab>
+
         <Tab Title="HOME">
             <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage" />
         </Tab>
@@ -17,9 +22,7 @@
             <ShellContent ContentTemplate="{DataTemplate views:PersonaView}" Route="PersonasPage" />
         </Tab>
 
-        <Tab Title="GESTION">
-            <ShellContent ContentTemplate="{DataTemplate views:GestionView}" Route="GestionPage" />
-        </Tab>
+
 
     </TabBar>
 

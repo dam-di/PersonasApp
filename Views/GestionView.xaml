@@ -3,15 +3,85 @@
     x:Class="PersonasApp.Views.GestionView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewmodels="clr-namespace:PersonasApp.ViewModels"
-    Title="GestionView"
+    xmlns:models="clr-namespace:PersonasApp.Models"
     x:DataType="viewmodels:GestionViewModel"
+    BackgroundColor="#E2FFFF"
     BindingContext="{viewmodels:GestionViewModel}">
+
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior Command="{Binding ObtenerPersonasCommand}" 
+                                        EventName="Appearing" />
+    </ContentPage.Behaviors>
+
     <VerticalStackLayout>
-        <Label
-            HorizontalOptions="Center"
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" />
-        <Button Command="{Binding CrearGastoCommand}" Text="CREAR" />
+
+        <!--  CONTENEDOR HORIZONTAL DEL TITULO  -->
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Image
+                IsAnimationPlaying="True"
+                Source="user_hello.gif"
+                WidthRequest="100" />
+            <Label
+                FontAttributes="Bold"
+                FontFamily="KinderGarten"
+                FontSize="40"
+                HorizontalOptions="Center"
+                Text="GESTION"
+                VerticalOptions="Center" />
+        </HorizontalStackLayout>
+
+        <!--  CONTENEDOR HORIZONTAL DE LAS COLUMNAS  -->
+        <HorizontalStackLayout>
+
+
+            <!--  CONTENEDOR DE LISTA PERSONAS  -->
+            <VerticalStackLayout
+                Margin="30"
+                Background="WhiteSmoke"
+                HeightRequest="600"
+                HorizontalOptions="Start"
+                WidthRequest="350">
+                <VerticalStackLayout.Shadow>
+                    <Shadow
+                        Brush="Black"
+                        Opacity=".7"
+                        Radius="10"
+                        Offset="10,10" />
+                </VerticalStackLayout.Shadow>
+                <CollectionView WidthRequest="300" Margin="10"
+                                HeightRequest="400" 
+                                Background="LightGray"
+                                ItemsSource="{Binding ListaPersonas}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Persona">
+                            <Frame WidthRequest="280">
+                                <HorizontalStackLayout>
+                                    <Image Source="user.png" WidthRequest="50"/>
+                                    <VerticalStackLayout Margin="10">
+                                        <Label Text="{Binding Nombre}"/>
+                                        <Label Text="{Binding FechaNacimiento}"/>
+                                        <Label Text="{Binding Correo}"/>
+                                    </VerticalStackLayout>
+
+                                </HorizontalStackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+
+            </VerticalStackLayout>
+
+
+
+        </HorizontalStackLayout>
+
+
     </VerticalStackLayout>
 </ContentPage>
