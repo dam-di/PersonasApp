@@ -17,6 +17,9 @@ namespace PersonasApp.ViewModels
         [ObservableProperty]
         private ObservableCollection<Persona> listaPersonas;
 
+        [ObservableProperty]
+        private Persona seletedPersona;
+
         [RelayCommand]
         public async void ObtenerPersonas()
         {

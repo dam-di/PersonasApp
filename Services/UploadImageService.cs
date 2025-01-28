@@ -9,7 +9,7 @@ namespace PersonasApp.Services
 {
     class UploadImageService
     {
-        public static async Task<string> UploadImageAsync(string filePath, string url)
+        public static async Task<string> UploadImageAsync(string filePath, string idPersona, string url)
         {
             try
             {
@@ -20,7 +20,7 @@ namespace PersonasApp.Services
                 {
                     var fileContent = new ByteArrayContent(fileBytes);
                     fileContent.Headers.Add("Content-Type", "application/octet-stream");
-                    content.Add(fileContent, "file", Path.GetFileName(filePath));
+                    content.Add(fileContent, "file", idPersona + Path.GetExtension(filePath));
 
                     // Enviar la imagen al servidor de Spring Boot
                     HttpResponseMessage response = await client.PostAsync(url, content);

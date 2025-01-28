@@ -4,6 +4,7 @@ using PersonasApp.Utils;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -22,6 +23,25 @@ namespace PersonasApp.Models
         [JsonProperty("correo")]
         public string Correo { get; set; }
 
+        [JsonProperty("avatarurl")]
+        public string AvatarUrl { set; get; }
+
+        //public string AvatarUrl
+        //{
+        //    set => _avatarUrl = value;
+        //    get
+        //    {
+        //        if (_avatarUrl != null && !_avatarUrl.Equals("user.png"))
+        //        {
+        //            return "http://localhost:8081/dropbox/download/" + Id + _avatarUrl;
+        //        }
+        //        return _avatarUrl;
+
+        //    }
+        //}
+
+
+
         [Newtonsoft.Json.JsonConverter(typeof(DateConverter))]
         [JsonProperty("fechaNacimiento")]
         public DateTime FechaNacimiento { get; set; }
@@ -33,6 +53,9 @@ namespace PersonasApp.Models
 
         [JsonProperty("actividades")]
         public ObservableCollection<Actividad> Actividades { get; set; }
+
+        [JsonProperty("gastos")]
+        public ObservableCollection<Gasto> Gastos { get; set; }
 
         public Persona()
         {

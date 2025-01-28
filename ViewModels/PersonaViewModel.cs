@@ -24,6 +24,8 @@ namespace PersonasApp.ViewModels
         public PersonaViewModel()
         {
             Persona = new Persona();
+            RutaImagen = "http://localhost:8081/dropbox/download/imagen_bonita.png";
+            //RutaImagen = "https://i.pinimg.com/originals/d9/f2/15/d9f21515b1e38d83e94fdbce88f623b6.gif";
         }
 
         [RelayCommand]
@@ -33,6 +35,31 @@ namespace PersonasApp.ViewModels
             if (file != null)
             {
                 RutaImagen = file.FullPath;
+            }
+        }
+
+        [RelayCommand]
+        public async Task<bool> UploadImage(string idPersona)
+        {
+            try
+            {
+                string _rutaImagen = RutaImagen;
+                RutaImagen = "loading.gif";
+                await UploadImageService.UploadImageAsync(_rutaImagen, idPersona,
+                    "http://localhost:8081/dropbox/upload");
+                await App.Current.MainPage.DisplayAlert("ÉXITO",
+                    "Subiendo imagen...",
+                    "ACEPTAR");
+                RutaImagen = _rutaImagen;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error al subir imagen");
+                await App.Current.MainPage.DisplayAlert("ERROR",
+                    "No se pudo subir la imagen",
+                    "ACEPTAR");
+                return false;
             }
         }
 
@@ -72,11 +99,15 @@ namespace PersonasApp.ViewModels
             RequestModel request = new RequestModel();
             request.Method = "POST"; //POST GET DELETE UPDATE
             request.Route = "http://localhost:8080/personas/crear";
+            Persona.AvatarUrl = Path.GetExtension(RutaImagen);
+            // avatarurl = "http://localhost:8081/dropbox/download/50.png"
             request.Data = Persona;
             ResponseModel response = await APIService.ExecuteRequest(request);
 
             if (response.Success == 0)
             {
+                var idPersona = response.Data;
+                var okCrear = await UploadImage(idPersona.ToString());
 
             }
 

@@ -3,16 +3,15 @@
     x:Class="PersonasApp.Views.GestionView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:PersonasApp.Models"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewmodels="clr-namespace:PersonasApp.ViewModels"
-    xmlns:models="clr-namespace:PersonasApp.Models"
     x:DataType="viewmodels:GestionViewModel"
     BackgroundColor="#E2FFFF"
     BindingContext="{viewmodels:GestionViewModel}">
 
     <ContentPage.Behaviors>
-        <toolkit:EventToCommandBehavior Command="{Binding ObtenerPersonasCommand}" 
-                                        EventName="Appearing" />
+        <toolkit:EventToCommandBehavior Command="{Binding ObtenerPersonasCommand}" EventName="Appearing" />
     </ContentPage.Behaviors>
 
     <VerticalStackLayout>
@@ -50,26 +49,135 @@
                         Radius="10"
                         Offset="10,10" />
                 </VerticalStackLayout.Shadow>
-                <CollectionView WidthRequest="300" Margin="10"
-                                HeightRequest="400" 
-                                Background="LightGray"
-                                ItemsSource="{Binding ListaPersonas}">
+                <CollectionView
+                    Margin="10"
+                    Background="LightGray"
+                    HeightRequest="400"
+                    ItemsSource="{Binding ListaPersonas}"
+                    SelectedItem="{Binding SeletedPersona}"
+                    SelectionMode="Single"
+                    WidthRequest="300">
                     <CollectionView.ItemsLayout>
-                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
+                        <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:Persona">
                             <Frame WidthRequest="280">
                                 <HorizontalStackLayout>
-                                    <Image Source="user.png" WidthRequest="50"/>
+                                    <Image Source="{Binding AvatarUrl}" WidthRequest="50" />
                                     <VerticalStackLayout Margin="10">
-                                        <Label Text="{Binding Nombre}"/>
-                                        <Label Text="{Binding FechaNacimiento}"/>
-                                        <Label Text="{Binding Correo}"/>
+                                        <Label Text="{Binding Nombre}" />
+                                        <Label Text="{Binding FechaNacimiento}" />
+                                        <Label Text="{Binding Correo}" />
                                     </VerticalStackLayout>
 
                                 </HorizontalStackLayout>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup Name="CommonStates">
+                                        <VisualState Name="Normal" />
+                                        <VisualState Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="LightBlue" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
                             </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+
+            </VerticalStackLayout>
+
+            <!--  CONTENEDOR DE ACTIVIDADES  -->
+            <VerticalStackLayout
+                Margin="30"
+                Background="WhiteSmoke"
+                HeightRequest="600"
+                HorizontalOptions="Start"
+                WidthRequest="350">
+                <VerticalStackLayout.Shadow>
+                    <Shadow
+                        Brush="Black"
+                        Opacity=".7"
+                        Radius="10"
+                        Offset="10,10" />
+                </VerticalStackLayout.Shadow>
+                <CollectionView
+                    Margin="10"
+                    Background="LightGray"
+                    HeightRequest="400"
+                    ItemsSource="{Binding SeletedPersona.Actividades}"
+                    WidthRequest="300">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Actividad">
+                            <Frame WidthRequest="280">
+                                <HorizontalStackLayout>
+                                    <Image Source="coin.png" WidthRequest="50" />
+                                    <VerticalStackLayout Margin="10">
+                                        <Label Text="{Binding IdActividad}" />
+                                        <Label Text="{Binding Fecha}" />
+                                        <Label Text="{Binding Descripcion}" />
+                                    </VerticalStackLayout>
+
+                                </HorizontalStackLayout>
+
+
+                            </Frame>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+
+            </VerticalStackLayout>
+
+            <!--  CONTENEDOR DE GASTOS  -->
+            <VerticalStackLayout
+                Margin="30"
+                Background="WhiteSmoke"
+                HeightRequest="600"
+                HorizontalOptions="Start"
+                WidthRequest="350">
+                <VerticalStackLayout.Shadow>
+                    <Shadow
+                        Brush="Black"
+                        Opacity=".7"
+                        Radius="10"
+                        Offset="10,10" />
+                </VerticalStackLayout.Shadow>
+                <CollectionView
+                    Margin="10"
+                    Background="LightGray"
+                    HeightRequest="400"
+                    ItemsSource="{Binding SeletedPersona.Gastos}"
+                    WidthRequest="300">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Gasto">
+                            <Frame WidthRequest="280">
+                                <HorizontalStackLayout>
+                                    <Image Source="coin.png" WidthRequest="50" />
+                                    <VerticalStackLayout Margin="10">
+                                        <Label Text="{Binding Id}" />
+                                        <Label Text="{Binding Fecha}" />
+                                        <Label Text="{Binding Descripcion}" />
+                                        <Label Text="{Binding Total}" />
+                                    </VerticalStackLayout>
+
+                                </HorizontalStackLayout>
+
+
+                            </Frame>
+
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
 

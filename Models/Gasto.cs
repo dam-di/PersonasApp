@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PersonasApp.Models
 {
-    internal class Gasto
+    public class Gasto
     {
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
         public int? Id { get; set; }
