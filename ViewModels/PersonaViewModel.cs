@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Mopups.Services;
 using PersonasApp.Models;
 using PersonasApp.Services;
 using PersonasApp.Utils;
+using PersonasApp.Views.MopupsPanels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,10 +15,18 @@ using Windows.Networking.Sockets;
 
 namespace PersonasApp.ViewModels
 {
+    [QueryProperty(nameof(Persona), "Persona")]
     public partial class PersonaViewModel : ObservableObject
     {
         [ObservableProperty]
         private Persona persona;
+
+        [ObservableProperty]
+        private bool tieneTelefono;
+
+        [ObservableProperty]
+        private bool tienePasaporte;
+
 
         [ObservableProperty]
         private string rutaImagen;
@@ -28,6 +38,19 @@ namespace PersonasApp.ViewModels
             //RutaImagen = "https://i.pinimg.com/originals/d9/f2/15/d9f21515b1e38d83e94fdbce88f623b6.gif";
         }
 
+        // Establece los valores iniciales para editar o crear una persona
+        [RelayCommand]
+        public void EstablecerValoresIniciales()
+        {
+            if (Persona.Id != null) //Quiere decir que estamos editando
+            {
+                RutaImagen = Persona.AvatarUrl;
+                TienePasaporte = Persona.Pasaporte != null;
+                TieneTelefono = Persona.Telefono != null;
+            }
+        }
+
+
         [RelayCommand]
         public async void SeleccionarImagen()
         {
@@ -35,6 +58,7 @@ namespace PersonasApp.ViewModels
             if (file != null)
             {
                 RutaImagen = file.FullPath;
+                Persona.AvatarUrl = file.FullPath;
             }
         }
 

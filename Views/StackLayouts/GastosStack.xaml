@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout
+    x:Class="PersonasApp.Views.StackLayouts.GastosStack"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:PersonasApp.Models"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewmodels="clr-namespace:PersonasApp.ViewModels"
+    x:DataType="viewmodels:GestionViewModel">
+    <!--  CONTENEDOR DE GASTOS  -->
+    <VerticalStackLayout
+        Margin="30"
+        Background="WhiteSmoke"
+        HeightRequest="650"
+        HorizontalOptions="Start"
+        WidthRequest="350">
+        <VerticalStackLayout.Shadow>
+            <Shadow
+                Brush="Black"
+                Opacity=".7"
+                Radius="10"
+                Offset="10,10" />
+        </VerticalStackLayout.Shadow>
+
+        <Label
+            Margin="0,20,0,0"
+            FontAttributes="Bold"
+            FontFamily="KinderGarten"
+            FontSize="40"
+            HorizontalOptions="Center"
+            Text="GASTOS"
+            VerticalOptions="Center" />
+
+        <CollectionView
+            Margin="10"
+            Background="LightGray"
+            HeightRequest="400"
+            ItemsSource="{Binding SelectedPersona.Gastos}"
+            SelectedItem="{Binding SelectedGasto}"
+            SelectionMode="Single"
+            WidthRequest="300">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="5" Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Gasto">
+                    <Frame WidthRequest="280">
+                        <HorizontalStackLayout>
+                            <Image Source="coin.png" WidthRequest="50" />
+                            <VerticalStackLayout Margin="10">
+                                <Label Text="{Binding Id}" />
+                                <Label Text="{Binding Fecha}" />
+                                <Label Text="{Binding Descripcion}" />
+                                <Label Text="{Binding Total}" />
+                            </VerticalStackLayout>
+
+                        </HorizontalStackLayout>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup Name="CommonStates">
+                                <VisualState Name="Normal" />
+                                <VisualState Name="Selected">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="LightBlue" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Frame>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+        <Button
+            Margin="0,40,0,0"
+            BackgroundColor="MidnightBlue"
+            Command="{Binding ModoCrearGastoCommand}"
+            CornerRadius="0"
+            FontAttributes="Bold"
+            FontFamily="KinderGarten"
+            FontSize="28"
+            Text="+ NUEVO"
+            WidthRequest="300" />
+
+
+    </VerticalStackLayout>
+</StackLayout>

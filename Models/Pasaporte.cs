@@ -18,7 +18,7 @@ namespace PersonasApp.Models
 
         [JsonConverter(typeof(DateConverter))]
         [JsonProperty("fechaEmision")]
-        public DateTime FechaEmision { get; set; }
+        public DateTime? FechaEmision { get; set; } = DateTime.Now;
 
         [JsonProperty("persona")]
         public Persona Persona { get; set; }

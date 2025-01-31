@@ -1,8 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Mopups.Services;
 using Newtonsoft.Json;
+using PersonasApp.Commands;
 using PersonasApp.Models;
 using PersonasApp.Services;
+using PersonasApp.Views.MopupsPanels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,60 +21,129 @@ namespace PersonasApp.ViewModels
         private ObservableCollection<Persona> listaPersonas;
 
         [ObservableProperty]
-        private Persona seletedPersona;
+        private Persona selectedPersona;
+
+        [ObservableProperty]
+        private Gasto selectedGasto;
+
+        [ObservableProperty]
+        private bool isActividadesVisible;
+
+        [ObservableProperty]
+        private bool isGastosVisible;
+
+        [ObservableProperty]
+        private bool isGastoEditable;
+
+        public CrearGastoCommand CrearGastoCommand { get; set; }
+        public ObtenerPersonasCommand ObtenerPersonasCommand { get; set; }
+
+        public GestionViewModel()
+        {
+            CrearGastoCommand = new CrearGastoCommand(this);
+            ObtenerPersonasCommand = new ObtenerPersonasCommand(this);
+        }
 
         [RelayCommand]
-        public async void ObtenerPersonas()
+        public async Task EditarPersona()
         {
-            RequestModel request = new RequestModel()
-            {
-                Method = "GET",
-                Data = string.Empty,
-                Route = "http://localhost:8080/personas/todos"
-            };
-
-            ResponseModel response = await APIService.ExecuteRequest(request);
-            if (response.Success.Equals(0))
-            {
-                try
+            await Shell.Current.GoToAsync("//PersonasPage",
+                new Dictionary<string, object>()
                 {
-                    ListaPersonas =
-                        JsonConvert.DeserializeObject<ObservableCollection<Persona>>(response.Data.ToString());
-                }
-                catch (Exception ex) { }
+                    ["Persona"] = SelectedPersona
+                });
+        }
+
+        [RelayCommand]
+        public async Task AbrirMopup()
+        {
+            await MopupService.Instance.PushAsync(new PersonaMopup());
+        }
+
+        [RelayCommand]
+        public void HabilitarEditarGasto()
+        {
+            IsGastoEditable = true;
+        }
+
+        [RelayCommand]
+        public void CancelarHabilitarEditarGasto()
+        {
+            IsGastoEditable = false;
+        }
+
+
+        [RelayCommand]
+        public void EstadoInicial()
+        {
+            IsActividadesVisible = false;
+            IsGastosVisible = false;
+        }
+
+        [RelayCommand]
+        public void MostrarActividades()
+        {
+            if (SelectedPersona == null)
+            {
+                App.Current.MainPage.DisplayAlert("Atención",
+                    "Debes seleccionar una persona",
+                    "ACEPTAR");
+                return;
+            }
+
+            if (SelectedPersona.Actividades.Count > 0)
+            {
+                IsActividadesVisible = true;
+                IsGastosVisible = false;
+            }
+            else
+            {
+                App.Current.MainPage.DisplayAlert("Atención",
+                    "La persona seleccionada no tiene actividades",
+                    "ACEPTAR");
             }
 
         }
 
         [RelayCommand]
-        public async void CrearGasto()
+        public void MostrarGastos()
         {
-            await App.Current.MainPage.DisplayAlert("PersonasApp",
-                "Vas a crear un gasto",
-                "ACEPTAR");
 
-            var g = new Gasto()
+            if (SelectedPersona == null)
             {
-                Descripcion = "Cerveza 100 latas 500 cl",
-                Fecha = DateTime.Now,
-                Total = 58,
-                Persona = new Persona() { Id = 1 }
-            };
-            RequestModel request = new RequestModel()
-            {
-                Method = "POST",
-                Route = "http://localhost:8080/gastos/crear",
-                Data = g
-            };
+                App.Current.MainPage.DisplayAlert("Atención",
+                    "Debes seleccionar una persona",
+                    "ACEPTAR");
+                return;
+            }
 
-            ResponseModel response = await APIService.ExecuteRequest(request);
-            if (response.Success.Equals(0))
+            if (SelectedPersona.Gastos.Count > 0)
             {
-                await App.Current.MainPage.DisplayAlert("PersonasApp",
-                    response.Message,
+                IsActividadesVisible = false;
+                IsGastosVisible = true;
+            }
+            else
+            {
+                App.Current.MainPage.DisplayAlert("Atención",
+                    "La persona seleccionada no tiene gastos",
                     "ACEPTAR");
             }
 
+        }
+
+
+        [RelayCommand]
+        public async Task Animar(object _stack)
+        {
+            StackLayout stack = (StackLayout)_stack;
+            await stack.RotateTo(360, 800);
+        }
+
+        [RelayCommand]
+        public void ModoCrearGasto()
+        {
+            SelectedGasto = new Gasto();
+            IsGastoEditable = true;
         }
     }
 }

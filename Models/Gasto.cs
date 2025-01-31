@@ -18,7 +18,7 @@ namespace PersonasApp.Models
 
         [JsonConverter(typeof(DateConverter))]
         [JsonProperty("fecha")]
-        public DateTime Fecha { get; set; }
+        public DateTime? Fecha { get; set; } = DateTime.Now;
 
         [JsonProperty("total")]
         public decimal Total { get; set; }

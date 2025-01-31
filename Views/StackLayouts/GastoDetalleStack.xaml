@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout
+    x:Class="PersonasApp.Views.StackLayouts.GastoDetalleStack"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:PersonasApp.Models"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:viewmodels="clr-namespace:PersonasApp.ViewModels"
+    x:DataType="viewmodels:GestionViewModel">
+
+    <!--  Contenedor para GASTO  -->
+    <VerticalStackLayout
+        Margin="30"
+        Background="WhiteSmoke"
+        HeightRequest="650"
+        HorizontalOptions="Start"
+        WidthRequest="350">
+        <VerticalStackLayout.Shadow>
+            <Shadow
+                Brush="Black"
+                Opacity=".7"
+                Radius="10"
+                Offset="10,10" />
+        </VerticalStackLayout.Shadow>
+
+        <Label
+            Margin="0,20,0,0"
+            FontAttributes="Bold"
+            FontFamily="KinderGarten"
+            FontSize="40"
+            HorizontalOptions="Center"
+            Text="DETALLE GASTO"
+            VerticalOptions="Center" />
+        <VerticalStackLayout Margin="0,50,0,0" WidthRequest="270">
+            <Label
+                FontAttributes="Bold"
+                FontFamily="KinderGarten"
+                FontSize="20"
+                Text="Descripción:" />
+            <Editor
+                Margin="0,10"
+                FontFamily="KinderGarten"
+                FontSize="15"
+                HeightRequest="80"
+                IsEnabled="{Binding IsGastoEditable}"
+                Text="{Binding SelectedGasto.Descripcion}" />
+            <Label
+                Margin="0,10"
+                FontAttributes="Bold"
+                FontFamily="KinderGarten"
+                FontSize="20"
+                Text="Fecha:" />
+
+            <DatePicker
+                Date="{Binding SelectedGasto.Fecha}"
+                HorizontalOptions="Start"
+                IsEnabled="{Binding IsGastoEditable}"
+                WidthRequest="270" />
+
+            <HorizontalStackLayout Margin="0,10">
+                <Label
+                    FontAttributes="Bold"
+                    FontFamily="KinderGarten"
+                    FontSize="20"
+                    Text="Total:"
+                    VerticalTextAlignment="Center" />
+                <Entry
+                    FontFamily="KinderGarten"
+                    FontSize="16"
+                    HorizontalTextAlignment="End"
+                    IsEnabled="{Binding IsGastoEditable}"
+                    Placeholder="0.0"
+                    Text="{Binding SelectedGasto.Total}"
+                    WidthRequest="100" />
+                <Label
+                    FontAttributes="Bold"
+                    FontFamily="KinderGarten"
+                    FontSize="20"
+                    Text="€"
+                    VerticalTextAlignment="Center" />
+            </HorizontalStackLayout>
+
+            <Button
+                Margin="0,40,0,0"
+                BackgroundColor="MidnightBlue"
+                Command="{Binding HabilitarEditarGastoCommand}"
+                CornerRadius="0"
+                FontAttributes="Bold"
+                FontFamily="KinderGarten"
+                FontSize="28"
+                IsVisible="{Binding IsGastoEditable, Converter={toolkit:InvertedBoolConverter}}"
+                Text="EDITAR" />
+
+            <Button
+                Margin="0,40,0,0"
+                BackgroundColor="MidnightBlue"
+                Command="{Binding CrearGastoCommand}"
+                CornerRadius="0"
+                FontAttributes="Bold"
+                FontFamily="KinderGarten"
+                FontSize="28"
+                IsVisible="{Binding IsGastoEditable}"
+                Text="ACEPTAR" />
+
+            <Button
+                Margin="0,10"
+                BackgroundColor="MidnightBlue"
+                Command="{Binding CancelarHabilitarEditarGastoCommand}"
+                CornerRadius="0"
+                FontAttributes="Bold"
+                FontFamily="KinderGarten"
+                FontSize="28"
+                IsVisible="{Binding IsGastoEditable}"
+                Text="CANCELAR" />
+
+        </VerticalStackLayout>
+
+
+
+
+    </VerticalStackLayout>
+
+</StackLayout>

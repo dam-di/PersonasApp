@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui.Controls;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Maui.Controls;
 using Newtonsoft.Json;
 using PersonasApp.Utils;
 using System;
@@ -23,8 +24,30 @@ namespace PersonasApp.Models
         [JsonProperty("correo")]
         public string Correo { get; set; }
 
+
+        private string _avatarUrl;
+
         [JsonProperty("avatarurl")]
-        public string AvatarUrl { set; get; }
+        public string AvatarUrl
+        {
+            set
+            {
+                if (value is not null)
+                {
+                    _avatarUrl = value;
+                }
+                else
+                {
+                    _avatarUrl = "user.png";
+                }
+
+            }
+            get
+            {
+                return _avatarUrl;
+            }
+
+        }
 
         //public string AvatarUrl
         //{
@@ -44,7 +67,7 @@ namespace PersonasApp.Models
 
         [Newtonsoft.Json.JsonConverter(typeof(DateConverter))]
         [JsonProperty("fechaNacimiento")]
-        public DateTime FechaNacimiento { get; set; }
+        public DateTime? FechaNacimiento { get; set; } = DateTime.Now;
 
         [JsonProperty("pasaporte")]
         public Pasaporte Pasaporte { get; set; }
